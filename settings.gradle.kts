@@ -1,0 +1,1 @@
+rootProject.name = "markdown-page-generator-gradle-plugin"
