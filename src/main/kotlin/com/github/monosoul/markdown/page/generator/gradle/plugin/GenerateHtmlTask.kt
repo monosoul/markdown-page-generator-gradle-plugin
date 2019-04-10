@@ -30,11 +30,11 @@ open class GenerateHtmlTask : DefaultTask() {
 
     @Input
     @Optional
-    var headerHtmlFile: String? = null
+    var headerHtmlFile: File? = null
 
     @Input
     @Optional
-    var footerHtmlFile: String? = null
+    var footerHtmlFile: File? = null
 
     @Input
     @Optional
@@ -90,10 +90,10 @@ open class GenerateHtmlTask : DefaultTask() {
         pageGenMojo.inputDirectory = inputDirectory.path
         pageGenMojo.outputDirectory = outputDirectory.path
         headerHtmlFile?.let {
-            pageGenMojo.setHeaderHtmlFile(it)
+            pageGenMojo.setHeaderHtmlFile(it.path)
         }
         footerHtmlFile?.let {
-            pageGenMojo.setFooterHtmlFile(it)
+            pageGenMojo.setFooterHtmlFile(it.path)
         }
         pageGenMojo.setFailIfFilesAreMissing(failIfFilesAreMissing)
         pageGenMojo.setRecursiveInput(recursiveInput)
