@@ -11,7 +11,7 @@ fun getAccessibleField(fieldName: String): Field {
     return field
 }
 
-fun <T : Any> delegate(): ReadWriteProperty<MdPageGeneratorMojo, T> {
+fun <T : Any> reflection(): ReadWriteProperty<MdPageGeneratorMojo, T> {
     return object : ReadWriteProperty<MdPageGeneratorMojo, T> {
         @Suppress("UNCHECKED_CAST")
         override fun getValue(thisRef: MdPageGeneratorMojo, property: KProperty<*>): T {
