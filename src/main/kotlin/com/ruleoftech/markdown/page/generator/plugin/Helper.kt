@@ -6,7 +6,7 @@ import kotlin.reflect.KProperty
 
 fun getAccessibleField(fieldName: String): Field {
     val field = MdPageGeneratorMojo::class.java.getDeclaredField(fieldName)
-    field.isAccessible = true
+    field.isAccessible.takeIf { !it }?.let { field.isAccessible = true }
 
     return field
 }
