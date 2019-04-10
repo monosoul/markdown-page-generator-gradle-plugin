@@ -2,10 +2,7 @@ package com.github.monosoul.markdown.page.generator.gradle.plugin
 
 import com.ruleoftech.markdown.page.generator.plugin.*
 import org.gradle.api.DefaultTask
-import org.gradle.api.tasks.Input
-import org.gradle.api.tasks.InputDirectory
-import org.gradle.api.tasks.OutputDirectory
-import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.*
 import java.io.File
 
 open class GenerateHtmlTask : DefaultTask() {
@@ -18,9 +15,11 @@ open class GenerateHtmlTask : DefaultTask() {
     private val defaultEncoding = "UTF-8"
 
     @Input
+    @Optional
     var defaultTitle: String? = null
 
     @Input
+    @Optional
     var alwaysUseDefaultTitle: Boolean = false
 
     @InputDirectory
@@ -30,42 +29,55 @@ open class GenerateHtmlTask : DefaultTask() {
     var outputDirectory: File = File(project.buildDir, "/html/")
 
     @Input
+    @Optional
     var headerHtmlFile: String? = null
 
     @Input
+    @Optional
     var footerHtmlFile: String? = null
 
     @Input
+    @Optional
     var failIfFilesAreMissing: Boolean = true
 
     @Input
+    @Optional
     var recursiveInput: Boolean = false
 
     @Input
+    @Optional
     var transformRelativeMarkdownLinks: Boolean = false
 
     @Input
+    @Optional
     var inputEncoding: String = defaultEncoding
 
     @Input
+    @Optional
     var outputEncoding: String = defaultEncoding
 
     @Input
+    @Optional
     var parsingTimeoutInMillis: Long? = null
 
     @Input
+    @Optional
     var inputFileExtensions: String = "md"
 
     @Input
+    @Optional
     var applyFiltering: Boolean = false
 
     @Input
+    @Optional
     var timestampFormat: String = "yyyy-MM-dd\\'T\\'HH:mm:ss\\'Z\\'"
 
     @Input
+    @Optional
     var attributes: Array<String> = arrayOf()
 
     @Input
+    @Optional
     var pegdownExtensions: String = "TABLES"
 
     @TaskAction
