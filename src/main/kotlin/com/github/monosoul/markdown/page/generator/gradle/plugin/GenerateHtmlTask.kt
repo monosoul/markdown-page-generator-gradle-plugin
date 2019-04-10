@@ -28,11 +28,11 @@ open class GenerateHtmlTask : DefaultTask() {
     @OutputDirectory
     var outputDirectory: File = File(project.buildDir, "/html/")
 
-    @Input
+    @InputFile
     @Optional
     var headerHtmlFile: File? = null
 
-    @Input
+    @InputFile
     @Optional
     var footerHtmlFile: File? = null
 
@@ -84,30 +84,30 @@ open class GenerateHtmlTask : DefaultTask() {
     fun callMavenPlugin() {
         val pageGenMojo = MdPageGeneratorMojo()
         defaultTitle?.let {
-            pageGenMojo.setDefaultTitle(it)
+            pageGenMojo.defaultTitle = it
         }
-        pageGenMojo.setAlwaysUseDefaultTitle(alwaysUseDefaultTitle)
+        pageGenMojo.alwaysUseDefaultTitle = alwaysUseDefaultTitle
         pageGenMojo.inputDirectory = inputDirectory.path
         pageGenMojo.outputDirectory = outputDirectory.path
         headerHtmlFile?.let {
-            pageGenMojo.setHeaderHtmlFile(it.path)
+            pageGenMojo.headerHtmlFile = it.path
         }
         footerHtmlFile?.let {
-            pageGenMojo.setFooterHtmlFile(it.path)
+            pageGenMojo.footerHtmlFile = it.path
         }
-        pageGenMojo.setFailIfFilesAreMissing(failIfFilesAreMissing)
-        pageGenMojo.setRecursiveInput(recursiveInput)
-        pageGenMojo.setTransformRelativeMarkdownLinks(transformRelativeMarkdownLinks)
-        pageGenMojo.setInputEncoding(inputEncoding)
-        pageGenMojo.setOutputEncoding(outputEncoding)
+        pageGenMojo.failIfFilesAreMissing = failIfFilesAreMissing
+        pageGenMojo.recursiveInput = recursiveInput
+        pageGenMojo.transformRelativeMarkdownLinks = transformRelativeMarkdownLinks
+        pageGenMojo.inputEncoding = inputEncoding
+        pageGenMojo.outputEncoding = outputEncoding
         parsingTimeoutInMillis?.let {
-            pageGenMojo.setParsingTimeoutInMillis(it)
+            pageGenMojo.parsingTimeoutInMillis = it
         }
         pageGenMojo.setInputFileExtensions(inputFileExtensions)
-        pageGenMojo.setApplyFiltering(applyFiltering)
-        pageGenMojo.setTimestampFormat(timestampFormat)
-        pageGenMojo.setAttributes(attributes)
-        pageGenMojo.setPegdownExtensions(pegdownExtensions)
+        pageGenMojo.applyFiltering = applyFiltering
+        pageGenMojo.timestampFormat = timestampFormat
+        pageGenMojo.attributes = attributes
+        pageGenMojo.pegdownExtensions = pegdownExtensions
 
         pageGenMojo.execute()
     }
