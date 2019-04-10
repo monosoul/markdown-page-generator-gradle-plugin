@@ -12,3 +12,7 @@ repositories {
 kotlinDslPluginOptions {
     experimentalWarning.set(false)
 }
+
+dependencies {
+    implementation("com.ruleoftech:markdown-page-generator-plugin:2.1.0")
+}
