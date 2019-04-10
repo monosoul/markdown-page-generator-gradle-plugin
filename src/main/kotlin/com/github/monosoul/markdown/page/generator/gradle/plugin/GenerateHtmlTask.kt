@@ -15,7 +15,7 @@ open class GenerateHtmlTask : DefaultTask() {
         description = "Generates html files out of markdown for ${project.name}."
     }
 
-    val defaultEncoding = "UTF-8"
+    private val defaultEncoding = "UTF-8"
 
     @Input
     var defaultTitle: String? = null
