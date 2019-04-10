@@ -1,22 +1,22 @@
 package com.ruleoftech.markdown.page.generator.plugin
 
-var MdPageGeneratorMojo.defaultTitle: String? by nullableStringDelegate
-var MdPageGeneratorMojo.alwaysUseDefaultTitle: Boolean by booleanDelegate
-var MdPageGeneratorMojo.headerHtmlFile: String? by nullableStringDelegate
-var MdPageGeneratorMojo.footerHtmlFile: String? by nullableStringDelegate
-var MdPageGeneratorMojo.failIfFilesAreMissing: Boolean by booleanDelegate
-var MdPageGeneratorMojo.recursiveInput: Boolean by booleanDelegate
-var MdPageGeneratorMojo.transformRelativeMarkdownLinks: Boolean by booleanDelegate
-var MdPageGeneratorMojo.inputEncoding: String by stringDelegate
-var MdPageGeneratorMojo.outputEncoding: String by stringDelegate
-var MdPageGeneratorMojo.parsingTimeoutInMillis: Long by longDelegate
+var MdPageGeneratorMojo.defaultTitle by delegate<String>()
+var MdPageGeneratorMojo.alwaysUseDefaultTitle by delegate<Boolean>()
+var MdPageGeneratorMojo.headerHtmlFile by delegate<String>()
+var MdPageGeneratorMojo.footerHtmlFile by delegate<String>()
+var MdPageGeneratorMojo.failIfFilesAreMissing by delegate<Boolean>()
+var MdPageGeneratorMojo.recursiveInput by delegate<Boolean>()
+var MdPageGeneratorMojo.transformRelativeMarkdownLinks by delegate<Boolean>()
+var MdPageGeneratorMojo.inputEncoding by delegate<String>()
+var MdPageGeneratorMojo.outputEncoding by delegate<String>()
+var MdPageGeneratorMojo.parsingTimeoutInMillis by delegate<Long>()
 fun MdPageGeneratorMojo.setInputFileExtensions(inputFileExtensions: String) {
     val field = getAccessibleField("inputFileExtensions")
 
     field.set(this, inputFileExtensions)
 }
 
-var MdPageGeneratorMojo.applyFiltering: Boolean by booleanDelegate
-var MdPageGeneratorMojo.timestampFormat: String by stringDelegate
-var MdPageGeneratorMojo.attributes: Array<String> by stringArrayDelegate
-var MdPageGeneratorMojo.pegdownExtensions: String by stringDelegate
+var MdPageGeneratorMojo.applyFiltering by delegate<Boolean>()
+var MdPageGeneratorMojo.timestampFormat by delegate<String>()
+var MdPageGeneratorMojo.attributes by delegate<Array<String>>()
+var MdPageGeneratorMojo.pegdownExtensions by delegate<String>()
