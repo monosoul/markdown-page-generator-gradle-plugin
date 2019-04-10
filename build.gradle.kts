@@ -1,5 +1,5 @@
 group = "com.github.monosoul"
-version = "0.0.1"
+version = "2.1.0"
 
 plugins {
     `kotlin-dsl`
