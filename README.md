@@ -42,17 +42,9 @@ Just Gradle, nothing else is needed.
 ### Usage example
 Using Kotlin DSL:
 ```kotlin
-buildscript {
-    dependencies {
-        classpath("com.github.monosoul:markdown-page-generator-gradle-plugin:2.1.0.1")
-    }
-
-    repositories {
-        jcenter()
-    }
+plugins {
+  id("com.github.monosoul.markdown.page.generator") version "2.1.0.1"
 }
-
-apply(plugin = "com.github.monosoul.markdown.page.generator")
 
 tasks {
 
