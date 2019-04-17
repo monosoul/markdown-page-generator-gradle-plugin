@@ -7,7 +7,7 @@ This Gradle plugin's goal is to provide a way of using [the maven markdown-page-
 [Gradle Plugin Portal page](https://plugins.gradle.org/plugin/com.github.monosoul.markdown.page.generator)
 
 ## Gradle compatibility table
-| YADeGraP version | Lombok version |
+| Plugin version | Gradle version |
 |:----------------:|:--------------:|
 | 2.1.0.1 | \>= 4.9 |
 | 2.1.0 | \>= 5.0 |
@@ -85,7 +85,7 @@ You can find the detailed configuration options description in the [the maven ma
 
 ## Release History
 * 2.1.0.1
-    * Added compatibility with Gradle 4.10.x and 4.9 (fixes issue #1)
+    * Added compatibility with Gradle 4.10.x and 4.9 (fixes [issue #1](https://github.com/monosoul/markdown-page-generator-gradle-plugin/issues/1))
 * 2.1.0
     * Initial release
     
