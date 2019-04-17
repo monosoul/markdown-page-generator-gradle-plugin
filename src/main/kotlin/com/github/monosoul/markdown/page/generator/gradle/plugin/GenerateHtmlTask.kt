@@ -19,7 +19,6 @@ open class GenerateHtmlTask : DefaultTask() {
     var defaultTitle: String? = null
 
     @Input
-    @Optional
     var alwaysUseDefaultTitle: Boolean = false
 
     @InputDirectory
@@ -37,23 +36,18 @@ open class GenerateHtmlTask : DefaultTask() {
     var footerHtmlFile: File? = null
 
     @Input
-    @Optional
     var failIfFilesAreMissing: Boolean = true
 
     @Input
-    @Optional
     var recursiveInput: Boolean = false
 
     @Input
-    @Optional
     var transformRelativeMarkdownLinks: Boolean = false
 
     @Input
-    @Optional
     var inputEncoding: String = defaultEncoding
 
     @Input
-    @Optional
     var outputEncoding: String = defaultEncoding
 
     @Input
@@ -61,23 +55,18 @@ open class GenerateHtmlTask : DefaultTask() {
     var parsingTimeoutInMillis: Long? = null
 
     @Input
-    @Optional
     var inputFileExtensions: String = "md"
 
     @Input
-    @Optional
     var applyFiltering: Boolean = false
 
     @Input
-    @Optional
     var timestampFormat: String = "yyyy-MM-dd\\'T\\'HH:mm:ss\\'Z\\'"
 
     @Input
-    @Optional
     var attributes: Array<String> = arrayOf()
 
     @Input
-    @Optional
     var pegdownExtensions: String = "TABLES"
 
     @TaskAction
