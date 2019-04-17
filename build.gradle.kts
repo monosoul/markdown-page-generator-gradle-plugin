@@ -2,7 +2,7 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
 import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 
 group = "com.github.monosoul"
-version = "2.1.0"
+version = "2.1.0.1"
 
 plugins {
     `kotlin-dsl`
