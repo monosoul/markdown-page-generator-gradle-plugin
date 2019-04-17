@@ -1,9 +1,13 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+import org.gradle.api.tasks.testing.logging.TestLogEvent.*
+
 group = "com.github.monosoul"
 version = "2.1.0"
 
 plugins {
     `kotlin-dsl`
     id("com.gradle.plugin-publish") version "0.10.1"
+    groovy
 }
 
 repositories {
@@ -16,6 +20,10 @@ kotlinDslPluginOptions {
 
 dependencies {
     implementation("com.ruleoftech:markdown-page-generator-plugin:2.1.0")
+    testImplementation("org.spockframework", "spock-core", "1.3-groovy-2.5") {
+        exclude("org.codehaus.groovy")
+    }
+    testImplementation(gradleTestKit())
 }
 
 gradlePlugin {
@@ -42,6 +50,16 @@ pluginBundle {
 
     mavenCoordinates {
         artifactId = project.name
-        version = project.version as String
+    }
+}
+
+tasks {
+    withType(Test::class) {
+        useJUnit()
+
+        testLogging {
+            events = setOf(PASSED, SKIPPED, FAILED)
+            exceptionFormat = FULL
+        }
     }
 }
