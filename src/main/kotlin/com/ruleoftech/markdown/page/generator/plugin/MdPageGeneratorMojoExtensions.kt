@@ -22,13 +22,10 @@ var MdPageGeneratorMojo.attributes: Array<String> by ReflectionAccessor
 var MdPageGeneratorMojo.pegdownExtensions: String by ReflectionAccessor
 
 private object ReflectionAccessor {
-    operator fun <T> getValue(thisRef: MdPageGeneratorMojo, property: KProperty<*>): T {
-        return thisRef.reflectiveGet(property.name)
-    }
+    operator fun <T> getValue(obj: MdPageGeneratorMojo, property: KProperty<*>): T = obj.reflectiveGet(property.name)
 
-    operator fun <T> setValue(thisRef: MdPageGeneratorMojo, property: KProperty<*>, value: T) {
-        thisRef.reflectiveSet(property.name, value)
-    }
+    operator fun <T> setValue(obj: MdPageGeneratorMojo, property: KProperty<*>, value: T) =
+            obj.reflectiveSet(property.name, value)
 }
 
 @Suppress("UNCHECKED_CAST")
