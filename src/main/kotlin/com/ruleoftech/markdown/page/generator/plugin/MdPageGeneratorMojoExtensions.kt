@@ -13,35 +13,32 @@ var MdPageGeneratorMojo.transformRelativeMarkdownLinks: Boolean by ReflectionAcc
 var MdPageGeneratorMojo.inputEncoding: String by ReflectionAccessor
 var MdPageGeneratorMojo.outputEncoding: String by ReflectionAccessor
 var MdPageGeneratorMojo.parsingTimeoutInMillis: Long by ReflectionAccessor
-fun MdPageGeneratorMojo.setInputFileExtensions(inputFileExtensions: String) {
-    val field = getAccessibleField("inputFileExtensions")
-
-    field.set(this, inputFileExtensions)
-}
+fun MdPageGeneratorMojo.setInputFileExtensions(inputFileExtensions: String) =
+        reflectiveSet("inputFileExtensions", inputFileExtensions)
 
 var MdPageGeneratorMojo.applyFiltering: Boolean by ReflectionAccessor
 var MdPageGeneratorMojo.timestampFormat: String by ReflectionAccessor
 var MdPageGeneratorMojo.attributes: Array<String> by ReflectionAccessor
 var MdPageGeneratorMojo.pegdownExtensions: String by ReflectionAccessor
 
-private fun getAccessibleField(fieldName: String): Field {
-    val field = MdPageGeneratorMojo::class.java.getDeclaredField(fieldName)
-    field.isAccessible.takeIf { !it }?.let { field.isAccessible = true }
-
-    return field
-}
-
 private object ReflectionAccessor {
-    @Suppress("UNCHECKED_CAST")
     operator fun <T> getValue(thisRef: MdPageGeneratorMojo, property: KProperty<*>): T {
-        val field = getAccessibleField(property.name)
-
-        return field.get(thisRef) as T
+        return thisRef.reflectiveGet(property.name)
     }
 
     operator fun <T> setValue(thisRef: MdPageGeneratorMojo, property: KProperty<*>, value: T) {
-        val field = getAccessibleField(property.name)
-
-        field.set(thisRef, value)
+        thisRef.reflectiveSet(property.name, value)
     }
 }
+
+@Suppress("UNCHECKED_CAST")
+private fun <T> MdPageGeneratorMojo.reflectiveGet(fieldName: String): T = getAccessibleField(fieldName).get(this) as T
+private fun <T> MdPageGeneratorMojo.reflectiveSet(fieldName: String, value: T): Unit = getAccessibleField(fieldName)
+        .set(this, value)
+
+private fun MdPageGeneratorMojo.getAccessibleField(fieldName: String): Field = javaClass.getDeclaredField(fieldName)
+        .apply {
+            if (!isAccessible) {
+                isAccessible = true
+            }
+        }
