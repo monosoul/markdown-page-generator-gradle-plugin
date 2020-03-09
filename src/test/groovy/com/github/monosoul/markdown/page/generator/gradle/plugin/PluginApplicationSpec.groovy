@@ -16,6 +16,12 @@ class PluginApplicationSpec extends Specification {
 
 	@Shared
 	def gradleVersions = [
+			'6.2.2',
+			'6.1.1',
+			'6.0.1',
+			'5.6.4',
+			'5.5.1',
+			'5.4.1',
 			'5.3.1',
 			'5.2.1',
 			'5.1.1',
