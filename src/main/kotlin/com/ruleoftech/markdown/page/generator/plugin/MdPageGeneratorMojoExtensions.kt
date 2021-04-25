@@ -14,7 +14,7 @@ var MdPageGeneratorMojo.inputEncoding: String by ReflectionAccessor
 var MdPageGeneratorMojo.outputEncoding: String by ReflectionAccessor
 var MdPageGeneratorMojo.parsingTimeoutInMillis: Long by ReflectionAccessor
 fun MdPageGeneratorMojo.setInputFileExtensions(inputFileExtensions: String) =
-        reflectiveSet("inputFileExtensions", inputFileExtensions)
+    reflectiveSet("inputFileExtensions", inputFileExtensions)
 
 var MdPageGeneratorMojo.applyFiltering: Boolean by ReflectionAccessor
 var MdPageGeneratorMojo.timestampFormat: String by ReflectionAccessor
@@ -25,17 +25,17 @@ private object ReflectionAccessor {
     operator fun <T> getValue(obj: MdPageGeneratorMojo, property: KProperty<*>): T = obj.reflectiveGet(property.name)
 
     operator fun <T> setValue(obj: MdPageGeneratorMojo, property: KProperty<*>, value: T) =
-            obj.reflectiveSet(property.name, value)
+        obj.reflectiveSet(property.name, value)
 }
 
 @Suppress("UNCHECKED_CAST")
 private fun <T> MdPageGeneratorMojo.reflectiveGet(fieldName: String): T = getAccessibleField(fieldName).get(this) as T
 private fun <T> MdPageGeneratorMojo.reflectiveSet(fieldName: String, value: T): Unit = getAccessibleField(fieldName)
-        .set(this, value)
+    .set(this, value)
 
 private fun MdPageGeneratorMojo.getAccessibleField(fieldName: String): Field = javaClass.getDeclaredField(fieldName)
-        .apply {
-            if (!isAccessible) {
-                isAccessible = true
-            }
+    .apply {
+        if (!canAccess(this@getAccessibleField)) {
+            isAccessible = true
         }
+    }
