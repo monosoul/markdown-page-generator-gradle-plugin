@@ -10,6 +10,7 @@ This Gradle plugin's goal is to provide a way of using [the maven markdown-page-
 ## Gradle compatibility table
 | Plugin version | Gradle version |
 |:----------------:|:--------------:|
+| 2.3.0.0 | \>= 4.9 |
 | 2.1.0.1 | \>= 4.9 |
 | 2.1.0 | \>= 5.0 |
 
@@ -17,7 +18,7 @@ This Gradle plugin's goal is to provide a way of using [the maven markdown-page-
 To apply the plugin simply add it to the plugins block of your build script:
 ```kotlin
 plugins {
-  id("com.github.monosoul.markdown.page.generator") version "2.1.0.1"
+  id("com.github.monosoul.markdown.page.generator") version "2.3.0.0"
 }
 ```
 
@@ -30,7 +31,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath("gradle.plugin.com.github.monosoul:markdown-page-generator-gradle-plugin:2.1.0.1")
+    classpath("gradle.plugin.com.github.monosoul:markdown-page-generator-gradle-plugin:2.3.0.0")
   }
 }
 
@@ -44,12 +45,12 @@ Just Gradle, nothing else is needed.
 Using Kotlin DSL:
 ```kotlin
 plugins {
-  id("com.github.monosoul.markdown.page.generator") version "2.1.0.1"
+  id("com.github.monosoul.markdown.page.generator") version "2.3.0.0"
 }
 
 tasks {
 
-    val generateHtml = getByName("generateHtml", GenerateHtmlTask::class) {
+    named<GenerateHtmlTask>("generateHtml") {
         dependsOn(processResources)
 
         val encoding = "UTF-8"
@@ -77,6 +78,8 @@ be used for the html generation.
 You can find the detailed configuration options description in the [the maven markdown-page-generator-plugin's readme](https://github.com/walokra/markdown-page-generator-plugin/blob/master/Readme.md).
 
 ## Release History
+* 2.3.0.0
+  * Updated maven markdown-page-generator-plugin to 2.3.0
 * 2.1.0.1
     * Added compatibility with Gradle 4.10.x and 4.9 (fixes [issue #1](https://github.com/monosoul/markdown-page-generator-gradle-plugin/issues/1))
 * 2.1.0
