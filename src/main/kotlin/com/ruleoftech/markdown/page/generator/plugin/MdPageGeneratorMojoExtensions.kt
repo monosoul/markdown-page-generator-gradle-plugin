@@ -21,6 +21,7 @@ var MdPageGeneratorMojo.applyFiltering: Boolean by ReflectionAccessor
 var MdPageGeneratorMojo.timestampFormat: String by ReflectionAccessor
 var MdPageGeneratorMojo.attributes: Array<String> by ReflectionAccessor
 var MdPageGeneratorMojo.pegdownExtensions: String by ReflectionAccessor
+var MdPageGeneratorMojo.flexmarkParserOptions: String by ReflectionAccessor
 
 private object ReflectionAccessor {
     operator fun <T> getValue(obj: MdPageGeneratorMojo, property: KProperty<*>): T = obj.reflectiveGet(property.name)
