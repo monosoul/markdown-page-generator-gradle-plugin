@@ -1,8 +1,29 @@
 package com.github.monosoul.markdown.page.generator.gradle.plugin
 
-import com.ruleoftech.markdown.page.generator.plugin.*
+import com.ruleoftech.markdown.page.generator.plugin.MdPageGeneratorMojo
+import com.ruleoftech.markdown.page.generator.plugin.alwaysUseDefaultTitle
+import com.ruleoftech.markdown.page.generator.plugin.applyFiltering
+import com.ruleoftech.markdown.page.generator.plugin.attributes
+import com.ruleoftech.markdown.page.generator.plugin.defaultTitle
+import com.ruleoftech.markdown.page.generator.plugin.failIfFilesAreMissing
+import com.ruleoftech.markdown.page.generator.plugin.footerHtmlFile
+import com.ruleoftech.markdown.page.generator.plugin.headerHtmlFile
+import com.ruleoftech.markdown.page.generator.plugin.inputEncoding
+import com.ruleoftech.markdown.page.generator.plugin.outputEncoding
+import com.ruleoftech.markdown.page.generator.plugin.outputFileExtension
+import com.ruleoftech.markdown.page.generator.plugin.parsingTimeoutInMillis
+import com.ruleoftech.markdown.page.generator.plugin.pegdownExtensions
+import com.ruleoftech.markdown.page.generator.plugin.recursiveInput
+import com.ruleoftech.markdown.page.generator.plugin.setInputFileExtensions
+import com.ruleoftech.markdown.page.generator.plugin.timestampFormat
+import com.ruleoftech.markdown.page.generator.plugin.transformRelativeMarkdownLinks
 import org.gradle.api.DefaultTask
-import org.gradle.api.tasks.*
+import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.InputDirectory
+import org.gradle.api.tasks.InputFile
+import org.gradle.api.tasks.Optional
+import org.gradle.api.tasks.OutputDirectory
+import org.gradle.api.tasks.TaskAction
 import java.io.File
 
 open class GenerateHtmlTask : DefaultTask() {
@@ -58,6 +79,9 @@ open class GenerateHtmlTask : DefaultTask() {
     var inputFileExtensions: String = "md"
 
     @Input
+    var outputFileExtension: String = "html"
+
+    @Input
     var applyFiltering: Boolean = false
 
     @Input
@@ -94,6 +118,7 @@ open class GenerateHtmlTask : DefaultTask() {
         }
         pageGenMojo.setInputFileExtensions(inputFileExtensions)
         pageGenMojo.applyFiltering = applyFiltering
+        pageGenMojo.outputFileExtension = outputFileExtension
         pageGenMojo.timestampFormat = timestampFormat
         pageGenMojo.attributes = attributes
         pageGenMojo.pegdownExtensions = pegdownExtensions

@@ -16,6 +16,7 @@ var MdPageGeneratorMojo.parsingTimeoutInMillis: Long by ReflectionAccessor
 fun MdPageGeneratorMojo.setInputFileExtensions(inputFileExtensions: String) =
     reflectiveSet("inputFileExtensions", inputFileExtensions)
 
+var MdPageGeneratorMojo.outputFileExtension: String by ReflectionAccessor
 var MdPageGeneratorMojo.applyFiltering: Boolean by ReflectionAccessor
 var MdPageGeneratorMojo.timestampFormat: String by ReflectionAccessor
 var MdPageGeneratorMojo.attributes: Array<String> by ReflectionAccessor
