@@ -1,5 +1,7 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
-import org.gradle.api.tasks.testing.logging.TestLogEvent.*
+import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
+import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
+import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
 
 group = "com.github.monosoul"
 version = "2.1.0.1"
@@ -19,7 +21,7 @@ kotlinDslPluginOptions {
 }
 
 dependencies {
-    implementation("com.ruleoftech:markdown-page-generator-plugin:2.1.0")
+    implementation("com.ruleoftech:markdown-page-generator-plugin:2.3.0")
     testImplementation("org.spockframework", "spock-core", "1.3-groovy-2.5") {
         exclude("org.codehaus.groovy")
     }
