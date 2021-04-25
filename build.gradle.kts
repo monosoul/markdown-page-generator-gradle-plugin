@@ -1,7 +1,9 @@
+import org.gradle.api.JavaVersion.VERSION_1_8
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
 import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "com.github.monosoul"
 version = "2.3.0.0"
@@ -10,6 +12,10 @@ plugins {
     `kotlin-dsl`
     id("com.gradle.plugin-publish") version "0.14.0"
     groovy
+}
+
+java {
+    sourceCompatibility = VERSION_1_8
 }
 
 repositories {
@@ -41,7 +47,8 @@ pluginBundle {
     (plugins) {
         "mdPageGeneratorPlugin" {
             displayName = "Markdown to HTML Page Generator Gradle Plugin"
-            description = "This plugins wraps the maven markdown-page-generator-plugin by walokra so it can be used in Gradle."
+            description =
+                "This plugins wraps the maven markdown-page-generator-plugin by walokra so it can be used in Gradle."
             tags = listOf("markdown", "html", "header", "footer", "walokra")
             version = project.version as String
 
@@ -56,12 +63,18 @@ pluginBundle {
 }
 
 tasks {
-    withType(Test::class) {
+    withType<Test> {
         useJUnit()
 
         testLogging {
             events = setOf(PASSED, SKIPPED, FAILED)
             exceptionFormat = FULL
+        }
+    }
+
+    withType<KotlinCompile>().configureEach {
+        kotlinOptions {
+            jvmTarget = VERSION_1_8.majorVersion
         }
     }
 }

@@ -37,7 +37,7 @@ private fun <T> MdPageGeneratorMojo.reflectiveSet(fieldName: String, value: T): 
 
 private fun MdPageGeneratorMojo.getAccessibleField(fieldName: String): Field = javaClass.getDeclaredField(fieldName)
     .apply {
-        if (!canAccess(this@getAccessibleField)) {
+        if (!isAccessible) {
             isAccessible = true
         }
     }
