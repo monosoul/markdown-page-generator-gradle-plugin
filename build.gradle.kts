@@ -4,7 +4,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
 
 group = "com.github.monosoul"
-version = "2.1.0.1"
+version = "2.3.0.0"
 
 plugins {
     `kotlin-dsl`
