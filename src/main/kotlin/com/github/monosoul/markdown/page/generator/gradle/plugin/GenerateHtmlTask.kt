@@ -100,6 +100,7 @@ open class GenerateHtmlTask : DefaultTask() {
     @TaskAction
     fun callMavenPlugin() {
         val pageGenMojo = MdPageGeneratorMojo()
+        pageGenMojo.log = LoggerDecorator(logger)
         defaultTitle?.let {
             pageGenMojo.defaultTitle = it
         }
