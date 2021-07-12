@@ -2,10 +2,9 @@ package com.github.monosoul.markdown.page.generator.gradle.plugin
 
 
 import org.gradle.testkit.runner.GradleRunner
-import org.junit.Rule
-import org.junit.rules.TemporaryFolder
 import spock.lang.Shared
 import spock.lang.Specification
+import spock.lang.TempDir
 import spock.lang.Unroll
 
 import static org.apache.commons.io.FileUtils.copyDirectory
@@ -16,29 +15,19 @@ class PluginApplicationSpec extends Specification {
 
 	@Shared
 	def gradleVersions = [
-			'6.8.3',
-			'6.2.2',
-			'6.1.1',
-			'6.0.1',
-			'5.6.4',
-			'5.5.1',
-			'5.4.1',
-			'5.3.1',
-			'5.2.1',
-			'5.1.1',
-			'5.0',
-			'4.10.3',
-			'4.9'
+			'7.1.1',
+			'6.8.3'
 	]
 	@Shared
 	def exampleFileName = 'example'
-	@Rule
-	final TemporaryFolder testProjectDir = new TemporaryFolder()
+
+	@TempDir
+	File testProjectDir
 
 	def "should work with kotlin dsl and Gradle #gradleVersion"() {
 		setup:
-			def buildFile = testProjectDir.newFile('build.gradle.kts')
-			testProjectDir.newFile('settings.gradle.kts') << "rootProject.name = \"markdownGeneratorTest\""
+			def buildFile = new File(testProjectDir, 'build.gradle.kts')
+			new File(testProjectDir, 'settings.gradle.kts') << "rootProject.name = \"markdownGeneratorTest\""
 			buildFile << """
             import com.github.monosoul.markdown.page.generator.gradle.plugin.GenerateHtmlTask
 
@@ -63,7 +52,7 @@ class PluginApplicationSpec extends Specification {
 			copyResources()
 		when:
 			def result = GradleRunner.create()
-					.withProjectDir(testProjectDir.root)
+					.withProjectDir(testProjectDir)
 					.withGradleVersion(gradleVersion)
 					.withArguments('generateHtml', '--stacktrace')
 					.withPluginClasspath()
@@ -72,7 +61,7 @@ class PluginApplicationSpec extends Specification {
 			result.task(':generateHtml').outcome == SUCCESS
 		and:
 			def expectedHtml = new File(getClass().getResource("/html/${exampleFileName}.html").toURI()).text
-			def actualHtml = new File(testProjectDir.root, "/build/html/${exampleFileName}.html").text
+			def actualHtml = new File(testProjectDir, "/build/html/${exampleFileName}.html").text
 			actualHtml == expectedHtml
 		where:
 			gradleVersion << gradleVersions
@@ -80,8 +69,8 @@ class PluginApplicationSpec extends Specification {
 
 	def "should work with groovy dsl and Gradle #gradleVersion"() {
 		setup:
-			def buildFile = testProjectDir.newFile('build.gradle')
-			testProjectDir.newFile('settings.gradle') << "rootProject.name = \"markdownGeneratorTest\""
+			def buildFile = new File(testProjectDir, 'build.gradle')
+		new File(testProjectDir, 'settings.gradle') << "rootProject.name = \"markdownGeneratorTest\""
 			buildFile << """
             import com.github.monosoul.markdown.page.generator.gradle.plugin.GenerateHtmlTask
 
@@ -102,7 +91,7 @@ class PluginApplicationSpec extends Specification {
 			copyResources()
 		when:
 			def result = GradleRunner.create()
-					.withProjectDir(testProjectDir.root)
+					.withProjectDir(testProjectDir)
 					.withGradleVersion(gradleVersion)
 					.withArguments('generateHtml', '--stacktrace')
 					.withPluginClasspath()
@@ -111,7 +100,7 @@ class PluginApplicationSpec extends Specification {
 			result.task(':generateHtml').outcome == SUCCESS
 		and:
 			def expectedHtml = new File(getClass().getResource("/html/${exampleFileName}.html").toURI()).text
-			def actualHtml = new File(testProjectDir.root, "/build/html/${exampleFileName}.html").text
+			def actualHtml = new File(testProjectDir, "/build/html/${exampleFileName}.html").text
 			actualHtml == expectedHtml
 		where:
 			gradleVersion << gradleVersions
@@ -119,7 +108,7 @@ class PluginApplicationSpec extends Specification {
 
 	def copyResources() {
 		def markdown = new File(getClass().getResource('/markdown').toURI())
-		def target = testProjectDir.newFolder('src', 'main', 'resources', 'markdown')
+		def target = new File(testProjectDir, 'src/main/resources/markdown')
 		copyDirectory(markdown, target)
 	}
 }

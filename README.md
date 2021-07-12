@@ -1,7 +1,7 @@
 # Markdown to HTML Page Generator Gradle Plugin
 This Gradle plugin's goal is to provide a way of using [the maven markdown-page-generator-plugin by walokra](https://github.com/walokra/markdown-page-generator-plugin).
 
-[![Build Status](https://travis-ci.com/monosoul/markdown-page-generator-gradle-plugin.svg?branch=master)](https://travis-ci.com/monosoul/markdown-page-generator-gradle-plugin)
+![Build Status](https://github.com/monosoul/markdown-page-generator-gradle-plugin/actions/workflows/build.yaml/badge.svg)
 ![GitHub release](https://img.shields.io/github/release/monosoul/markdown-page-generator-gradle-plugin.svg)
 ![license](https://img.shields.io/github/license/monosoul/markdown-page-generator-gradle-plugin.svg)
  
@@ -10,6 +10,7 @@ This Gradle plugin's goal is to provide a way of using [the maven markdown-page-
 ## Gradle compatibility table
 | Plugin version | Gradle version |
 |:----------------:|:--------------:|
+| 2.3.1.0 | \>= 6.8.3 |
 | 2.3.0.0 | \>= 4.9 |
 | 2.1.0.1 | \>= 4.9 |
 | 2.1.0 | \>= 5.0 |

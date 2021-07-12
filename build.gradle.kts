@@ -6,11 +6,11 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "com.github.monosoul"
-version = "2.3.0.0"
+version = "2.3.1.0"
 
 plugins {
     `kotlin-dsl`
-    id("com.gradle.plugin-publish") version "0.14.0"
+    id("com.gradle.plugin-publish") version "0.15.0"
     groovy
 }
 
@@ -19,16 +19,12 @@ java {
 }
 
 repositories {
-    jcenter()
-}
-
-kotlinDslPluginOptions {
-    experimentalWarning.set(false)
+    mavenCentral()
 }
 
 dependencies {
-    implementation("com.ruleoftech:markdown-page-generator-plugin:2.3.0")
-    testImplementation("org.spockframework", "spock-core", "1.3-groovy-2.5") {
+    implementation("com.ruleoftech:markdown-page-generator-plugin:2.3.1")
+    testImplementation("org.spockframework:spock-core:2.0-groovy-3.0") {
         exclude("org.codehaus.groovy")
     }
     testImplementation(gradleTestKit())
@@ -64,7 +60,7 @@ pluginBundle {
 
 tasks {
     withType<Test> {
-        useJUnit()
+        useJUnitPlatform()
 
         testLogging {
             events = setOf(PASSED, SKIPPED, FAILED)
