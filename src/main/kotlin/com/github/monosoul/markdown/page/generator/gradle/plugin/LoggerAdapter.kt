@@ -3,7 +3,7 @@ package com.github.monosoul.markdown.page.generator.gradle.plugin
 import org.apache.maven.plugin.logging.Log
 import org.gradle.api.logging.Logger
 
-class LoggerDecorator(
+class LoggerAdapter(
     private val logger: Logger
 ) : Log {
     override fun isDebugEnabled() = logger.isDebugEnabled
