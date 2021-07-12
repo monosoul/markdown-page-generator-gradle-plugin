@@ -19,11 +19,7 @@ java {
 }
 
 repositories {
-    jcenter()
-}
-
-kotlinDslPluginOptions {
-    experimentalWarning.set(false)
+    mavenCentral()
 }
 
 dependencies {
