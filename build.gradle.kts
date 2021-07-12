@@ -27,7 +27,7 @@ kotlinDslPluginOptions {
 }
 
 dependencies {
-    implementation("com.ruleoftech:markdown-page-generator-plugin:2.3.0")
+    implementation("com.ruleoftech:markdown-page-generator-plugin:2.3.1")
     testImplementation("org.spockframework", "spock-core", "1.3-groovy-2.5") {
         exclude("org.codehaus.groovy")
     }
