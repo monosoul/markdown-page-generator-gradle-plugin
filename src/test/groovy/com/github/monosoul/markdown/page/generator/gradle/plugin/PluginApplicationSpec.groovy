@@ -16,19 +16,7 @@ class PluginApplicationSpec extends Specification {
 	@Shared
 	def gradleVersions = [
 			'7.1.1',
-			'6.8.3',
-			'6.2.2',
-			'6.1.1',
-			'6.0.1',
-			'5.6.4',
-			'5.5.1',
-			'5.4.1',
-			'5.3.1',
-			'5.2.1',
-			'5.1.1',
-			'5.0',
-			'4.10.3',
-			'4.9'
+			'6.8.3'
 	]
 	@Shared
 	def exampleFileName = 'example'
