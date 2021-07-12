@@ -77,14 +77,6 @@ be used for the html generation.
 
 ### Configuration options
 You can find the detailed configuration options description in the [the maven markdown-page-generator-plugin's readme](https://github.com/walokra/markdown-page-generator-plugin/blob/master/Readme.md).
-
-## Release History
-* 2.3.0.0
-  * Updated maven markdown-page-generator-plugin to 2.3.0
-* 2.1.0.1
-    * Added compatibility with Gradle 4.10.x and 4.9 (fixes [issue #1](https://github.com/monosoul/markdown-page-generator-gradle-plugin/issues/1))
-* 2.1.0
-    * Initial release
     
 ## License
 The software is licensed under the [Apache-2.0 License](LICENSE).
