@@ -24,7 +24,7 @@ repositories {
 
 dependencies {
     implementation("com.ruleoftech:markdown-page-generator-plugin:2.3.1")
-    testImplementation("org.spockframework", "spock-core", "1.3-groovy-2.5") {
+    testImplementation("org.spockframework:spock-core:2.0-groovy-3.0") {
         exclude("org.codehaus.groovy")
     }
     testImplementation(gradleTestKit())
@@ -60,7 +60,7 @@ pluginBundle {
 
 tasks {
     withType<Test> {
-        useJUnit()
+        useJUnitPlatform()
 
         testLogging {
             events = setOf(PASSED, SKIPPED, FAILED)
