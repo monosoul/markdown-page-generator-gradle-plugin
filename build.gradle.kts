@@ -10,7 +10,7 @@ version = "2.3.0.0"
 
 plugins {
     `kotlin-dsl`
-    id("com.gradle.plugin-publish") version "0.14.0"
+    id("com.gradle.plugin-publish") version "0.15.0"
     groovy
 }
 
