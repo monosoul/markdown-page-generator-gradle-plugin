@@ -38,14 +38,14 @@ class PluginApplicationSpec extends Specification {
             
             tasks {
                 "generateHtml"(GenerateHtmlTask::class) {
-                    pegdownExtensions = \"\"\"
+                    pegdownExtensions.set(\"\"\"
                         TABLES,
                         FENCED_CODE_BLOCKS,
                         STRIKETHROUGH,
                         SMARTYPANTS,
                         SMARTS,
                         AUTOLINKS
-                        \"\"\".trimIndent()
+                        \"\"\".trimIndent())
                 }
             }
             """
@@ -80,13 +80,13 @@ class PluginApplicationSpec extends Specification {
             }
 
 			def task = tasks.getByName('generateHtml')
-			task.pegdownExtensions = \"\"\"\
+			task.pegdownExtensions.set(\"\"\"\
                     TABLES,
                     FENCED_CODE_BLOCKS,
                     STRIKETHROUGH,
                     SMARTYPANTS,
                     SMARTS,
-                    AUTOLINKS\"\"\".stripIndent()
+                    AUTOLINKS\"\"\".stripIndent())
             """
 			copyResources()
 		when:
