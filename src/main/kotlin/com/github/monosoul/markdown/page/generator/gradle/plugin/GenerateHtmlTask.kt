@@ -20,6 +20,7 @@ import com.ruleoftech.markdown.page.generator.plugin.timestampFormat
 import com.ruleoftech.markdown.page.generator.plugin.transformRelativeMarkdownLinks
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.DirectoryProperty
+import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
@@ -32,7 +33,6 @@ import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 import org.gradle.kotlin.dsl.listProperty
 import org.gradle.kotlin.dsl.property
-import java.io.File
 import javax.inject.Inject
 
 open class GenerateHtmlTask @Inject constructor(
@@ -66,11 +66,11 @@ open class GenerateHtmlTask @Inject constructor(
 
     @InputFile
     @Optional
-    val headerHtmlFile: Property<File> = objectFactory.property()
+    val headerHtmlFile: RegularFileProperty = objectFactory.fileProperty()
 
     @InputFile
     @Optional
-    val footerHtmlFile: Property<File> = objectFactory.property()
+    val footerHtmlFile: RegularFileProperty = objectFactory.fileProperty()
 
     @Input
     val failIfFilesAreMissing: Property<Boolean> = objectFactory.property<Boolean>().convention(true)
@@ -125,10 +125,10 @@ open class GenerateHtmlTask @Inject constructor(
         pageGenMojo.inputDirectory = inputDirectory.asFile.get().path
         pageGenMojo.outputDirectory = outputDirectory.asFile.get().path
         headerHtmlFile.orNull?.let {
-            pageGenMojo.headerHtmlFile = it.path
+            pageGenMojo.headerHtmlFile = it.asFile.path
         }
         footerHtmlFile.orNull?.let {
-            pageGenMojo.footerHtmlFile = it.path
+            pageGenMojo.footerHtmlFile = it.asFile.path
         }
         pageGenMojo.failIfFilesAreMissing = failIfFilesAreMissing.get()
         pageGenMojo.recursiveInput = recursiveInput.get()

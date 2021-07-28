@@ -62,13 +62,13 @@ tasks {
         inputEncoding.set(encoding)
         outputEncoding.set(encoding)
 
-        val sourceDir = File(buildDir, "resources/main/markdown")
-        val outputDir = File(buildDir, "html")
+        val sourceDir = project.layout.buildDirectory.dir("resources/main/markdown")
+        val outputDir = project.layout.buildDirectory.dir("/html/")
 
         inputDirectory.set(sourceDir)
         outputDirectory.set(outputDir)
-        headerHtmlFile.set(File(sourceDir, "header.html"))
-        footerHtmlFile.set(File(sourceDir, "footer.html"))
+        headerHtmlFile.set(sourceDir.file("header.html"))
+        footerHtmlFile.set(sourceDir.file("footer.html"))
         transformRelativeMarkdownLinks.set(true)
     }
 }
