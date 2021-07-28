@@ -74,7 +74,7 @@ class PluginApplicationSpec extends Specification {
 	def "should work with groovy dsl and Gradle #gradleVersion"() {
 		setup:
 			def buildFile = new File(testProjectDir, 'build.gradle')
-		new File(testProjectDir, 'settings.gradle') << "rootProject.name = \"markdownGeneratorTest\""
+			new File(testProjectDir, 'settings.gradle') << "rootProject.name = \"markdownGeneratorTest\""
 			buildFile << """
             import com.github.monosoul.markdown.page.generator.gradle.plugin.GenerateHtmlTask
 

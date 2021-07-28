@@ -62,17 +62,17 @@ open class GenerateHtmlTask @Inject constructor(
 
     @InputDirectory
     val inputDirectory: DirectoryProperty = objectFactory.directoryProperty().convention(
-        providerFactory.provider { project.layout.projectDirectory.dir("/src/main/resources/markdown/") }
+        providerFactory.provider { project.layout.projectDirectory.dir("src/main/resources/markdown") }
     )
 
     @OutputDirectory
     val outputDirectory: DirectoryProperty = objectFactory.directoryProperty().convention(
-        project.layout.buildDirectory.dir("/html/")
+        project.layout.buildDirectory.dir("html")
     )
 
     @OutputDirectory
     val filteredOutputDirectory: DirectoryProperty = objectFactory.directoryProperty().convention(
-        project.layout.buildDirectory.dir("/filtered-md/")
+        project.layout.buildDirectory.dir("filtered-md")
     )
 
     @InputFile

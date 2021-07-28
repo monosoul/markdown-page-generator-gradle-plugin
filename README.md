@@ -63,7 +63,7 @@ tasks {
         outputEncoding.set(encoding)
 
         val sourceDir = project.layout.buildDirectory.dir("resources/main/markdown")
-        val outputDir = project.layout.buildDirectory.dir("/html/")
+        val outputDir = project.layout.buildDirectory.dir("html")
 
         inputDirectory.set(sourceDir)
         outputDirectory.set(outputDir)
