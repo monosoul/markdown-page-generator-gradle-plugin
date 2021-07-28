@@ -43,9 +43,17 @@ pluginBundle {
     (plugins) {
         "mdPageGeneratorPlugin" {
             displayName = "Markdown to HTML Page Generator Gradle Plugin"
-            description =
-                "This plugins wraps the maven markdown-page-generator-plugin by walokra so it can be used in Gradle."
-            tags = listOf("markdown", "html", "header", "footer", "walokra")
+            description = "This plugins wraps the maven markdown-page-generator-plugin by " +
+                    "Marko Wallin (walokra) so it can be used in Gradle."
+            tags = listOf(
+                "markdown",
+                "html",
+                "header",
+                "footer",
+                "walokra",
+                "com.ruleoftech",
+                "markdown-page-generator-plugin"
+            )
             version = project.version as String
 
             website = "https://github.com/monosoul/markdown-page-generator-gradle-plugin"
