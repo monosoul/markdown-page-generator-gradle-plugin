@@ -38,14 +38,18 @@ class PluginApplicationSpec extends Specification {
             
             tasks {
                 "generateHtml"(GenerateHtmlTask::class) {
-                    pegdownExtensions = \"\"\"
+                    headerHtmlFile.set(inputDirectory.file("html/header.html"))
+                    footerHtmlFile.set(inputDirectory.file("html/footer.html"))
+                    applyFiltering.set(true)
+                
+                    pegdownExtensions.set(\"\"\"
                         TABLES,
                         FENCED_CODE_BLOCKS,
                         STRIKETHROUGH,
                         SMARTYPANTS,
                         SMARTS,
                         AUTOLINKS
-                        \"\"\".trimIndent()
+                        \"\"\".trimIndent())
                 }
             }
             """
@@ -70,7 +74,7 @@ class PluginApplicationSpec extends Specification {
 	def "should work with groovy dsl and Gradle #gradleVersion"() {
 		setup:
 			def buildFile = new File(testProjectDir, 'build.gradle')
-		new File(testProjectDir, 'settings.gradle') << "rootProject.name = \"markdownGeneratorTest\""
+			new File(testProjectDir, 'settings.gradle') << "rootProject.name = \"markdownGeneratorTest\""
 			buildFile << """
             import com.github.monosoul.markdown.page.generator.gradle.plugin.GenerateHtmlTask
 
@@ -80,13 +84,17 @@ class PluginApplicationSpec extends Specification {
             }
 
 			def task = tasks.getByName('generateHtml')
-			task.pegdownExtensions = \"\"\"\
+			
+			task.headerHtmlFile.set(task.inputDirectory.file('html/header.html'))
+            task.footerHtmlFile.set(task.inputDirectory.file('html/footer.html'))
+            task.applyFiltering.set(true)
+			task.pegdownExtensions.set(\"\"\"\
                     TABLES,
                     FENCED_CODE_BLOCKS,
                     STRIKETHROUGH,
                     SMARTYPANTS,
                     SMARTS,
-                    AUTOLINKS\"\"\".stripIndent()
+                    AUTOLINKS\"\"\".stripIndent())
             """
 			copyResources()
 		when:

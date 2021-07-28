@@ -1,7 +1,7 @@
 # Markdown to HTML Page Generator Gradle Plugin
-This Gradle plugin's goal is to provide a way of using [the maven markdown-page-generator-plugin by walokra](https://github.com/walokra/markdown-page-generator-plugin).
+This Gradle plugin's goal is to provide a way of using [the maven markdown-page-generator-plugin by Marko Wallin (walokra)](https://github.com/walokra/markdown-page-generator-plugin).
 
-![Build Status](https://github.com/monosoul/markdown-page-generator-gradle-plugin/actions/workflows/build.yaml/badge.svg)
+![Build Status](https://github.com/monosoul/markdown-page-generator-gradle-plugin/actions/workflows/build.yaml/badge.svg?branch=master)
 ![GitHub release](https://img.shields.io/github/release/monosoul/markdown-page-generator-gradle-plugin.svg)
 ![license](https://img.shields.io/github/license/monosoul/markdown-page-generator-gradle-plugin.svg)
  
@@ -10,6 +10,7 @@ This Gradle plugin's goal is to provide a way of using [the maven markdown-page-
 ## Gradle compatibility table
 | Plugin version | Gradle version |
 |:----------------:|:--------------:|
+| 2.3.1.1 | \>= 6.8.3 |
 | 2.3.1.0 | \>= 6.8.3 |
 | 2.3.0.0 | \>= 4.9 |
 | 2.1.0.1 | \>= 4.9 |
@@ -19,7 +20,7 @@ This Gradle plugin's goal is to provide a way of using [the maven markdown-page-
 To apply the plugin simply add it to the plugins block of your build script:
 ```kotlin
 plugins {
-  id("com.github.monosoul.markdown.page.generator") version "2.3.1.0"
+  id("com.github.monosoul.markdown.page.generator") version "2.3.1.1"
 }
 ```
 
@@ -46,7 +47,7 @@ Just Gradle, nothing else is needed.
 Using Kotlin DSL:
 ```kotlin
 plugins {
-  id("com.github.monosoul.markdown.page.generator") version "2.3.1.0"
+  id("com.github.monosoul.markdown.page.generator") version "2.3.1.1"
 }
 
 tasks {
@@ -56,19 +57,19 @@ tasks {
 
         val encoding = "UTF-8"
 
-        recursiveInput = true
-        pegdownExtensions = "TABLES,FENCED_CODE_BLOCKS"
-        inputEncoding = encoding
-        outputEncoding = encoding
+        recursiveInput.set(true)
+        pegdownExtensions.set("TABLES,FENCED_CODE_BLOCKS")
+        inputEncoding.set(encoding)
+        outputEncoding.set(encoding)
 
-        val sourceDir = File(buildDir, "resources/main/markdown")
-        val outputDir = File(buildDir, "html")
+        val sourceDir = project.layout.buildDirectory.dir("resources/main/markdown")
+        val outputDir = project.layout.buildDirectory.dir("html")
 
-        inputDirectory = sourceDir
-        outputDirectory = outputDir
-        headerHtmlFile = File(sourceDir, "header.html")
-        footerHtmlFile = File(sourceDir, "footer.html")
-        transformRelativeMarkdownLinks = true
+        inputDirectory.set(sourceDir)
+        outputDirectory.set(outputDir)
+        headerHtmlFile.set(sourceDir.file("header.html"))
+        footerHtmlFile.set(sourceDir.file("footer.html"))
+        transformRelativeMarkdownLinks.set(true)
     }
 }
 ```

@@ -1,33 +1,50 @@
 package com.github.monosoul.markdown.page.generator.gradle.plugin
 
+import com.github.monosoul.markdown.page.generator.gradle.plugin.support.MavenLoggerAdapter
+import com.github.monosoul.markdown.page.generator.gradle.plugin.support.buildMavenProject
+import com.github.monosoul.markdown.page.generator.gradle.plugin.support.buildMavenResourcesFiltering
 import com.ruleoftech.markdown.page.generator.plugin.MdPageGeneratorMojo
 import com.ruleoftech.markdown.page.generator.plugin.alwaysUseDefaultTitle
 import com.ruleoftech.markdown.page.generator.plugin.applyFiltering
 import com.ruleoftech.markdown.page.generator.plugin.attributes
 import com.ruleoftech.markdown.page.generator.plugin.defaultTitle
 import com.ruleoftech.markdown.page.generator.plugin.failIfFilesAreMissing
+import com.ruleoftech.markdown.page.generator.plugin.filteredOutputDirectory
 import com.ruleoftech.markdown.page.generator.plugin.flexmarkParserOptions
 import com.ruleoftech.markdown.page.generator.plugin.footerHtmlFile
 import com.ruleoftech.markdown.page.generator.plugin.headerHtmlFile
 import com.ruleoftech.markdown.page.generator.plugin.inputEncoding
+import com.ruleoftech.markdown.page.generator.plugin.mavenResourcesFiltering
 import com.ruleoftech.markdown.page.generator.plugin.outputEncoding
 import com.ruleoftech.markdown.page.generator.plugin.outputFileExtension
 import com.ruleoftech.markdown.page.generator.plugin.parsingTimeoutInMillis
 import com.ruleoftech.markdown.page.generator.plugin.pegdownExtensions
+import com.ruleoftech.markdown.page.generator.plugin.project
 import com.ruleoftech.markdown.page.generator.plugin.recursiveInput
 import com.ruleoftech.markdown.page.generator.plugin.setInputFileExtensions
 import com.ruleoftech.markdown.page.generator.plugin.timestampFormat
 import com.ruleoftech.markdown.page.generator.plugin.transformRelativeMarkdownLinks
 import org.gradle.api.DefaultTask
+import org.gradle.api.file.DirectoryProperty
+import org.gradle.api.file.RegularFileProperty
+import org.gradle.api.model.ObjectFactory
+import org.gradle.api.provider.ListProperty
+import org.gradle.api.provider.Property
+import org.gradle.api.provider.ProviderFactory
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
-import java.io.File
+import org.gradle.kotlin.dsl.listProperty
+import org.gradle.kotlin.dsl.property
+import javax.inject.Inject
 
-open class GenerateHtmlTask : DefaultTask() {
+open class GenerateHtmlTask @Inject constructor(
+    objectFactory: ObjectFactory,
+    providerFactory: ProviderFactory
+) : DefaultTask() {
 
     init {
         group = "documentation"
@@ -38,96 +55,111 @@ open class GenerateHtmlTask : DefaultTask() {
 
     @Input
     @Optional
-    var defaultTitle: String? = null
+    val defaultTitle: Property<String> = objectFactory.property()
 
     @Input
-    var alwaysUseDefaultTitle: Boolean = false
+    val alwaysUseDefaultTitle: Property<Boolean> = objectFactory.property<Boolean>().convention(false)
 
     @InputDirectory
-    var inputDirectory: File = File(project.projectDir, "/src/main/resources/markdown/")
+    val inputDirectory: DirectoryProperty = objectFactory.directoryProperty().convention(
+        providerFactory.provider { project.layout.projectDirectory.dir("src/main/resources/markdown") }
+    )
 
     @OutputDirectory
-    var outputDirectory: File = File(project.buildDir, "/html/")
+    val outputDirectory: DirectoryProperty = objectFactory.directoryProperty().convention(
+        project.layout.buildDirectory.dir("html")
+    )
+
+    @OutputDirectory
+    val filteredOutputDirectory: DirectoryProperty = objectFactory.directoryProperty().convention(
+        project.layout.buildDirectory.dir("filtered-md")
+    )
 
     @InputFile
     @Optional
-    var headerHtmlFile: File? = null
+    val headerHtmlFile: RegularFileProperty = objectFactory.fileProperty()
 
     @InputFile
     @Optional
-    var footerHtmlFile: File? = null
+    val footerHtmlFile: RegularFileProperty = objectFactory.fileProperty()
 
     @Input
-    var failIfFilesAreMissing: Boolean = true
+    val failIfFilesAreMissing: Property<Boolean> = objectFactory.property<Boolean>().convention(true)
 
     @Input
-    var recursiveInput: Boolean = false
+    val recursiveInput: Property<Boolean> = objectFactory.property<Boolean>().convention(false)
 
     @Input
-    var transformRelativeMarkdownLinks: Boolean = false
+    val transformRelativeMarkdownLinks: Property<Boolean> = objectFactory.property<Boolean>().convention(false)
 
     @Input
-    var inputEncoding: String = defaultEncoding
+    val inputEncoding: Property<String> = objectFactory.property<String>().convention(defaultEncoding)
 
     @Input
-    var outputEncoding: String = defaultEncoding
+    val outputEncoding: Property<String> = objectFactory.property<String>().convention(defaultEncoding)
 
     @Input
     @Optional
-    var parsingTimeoutInMillis: Long? = null
+    val parsingTimeoutInMillis: Property<Long> = objectFactory.property()
 
     @Input
-    var inputFileExtensions: String = "md"
+    val inputFileExtensions: Property<String> = objectFactory.property<String>().convention("md")
 
     @Input
-    var outputFileExtension: String = "html"
+    val outputFileExtension: Property<String> = objectFactory.property<String>().convention("html")
 
     @Input
-    var applyFiltering: Boolean = false
+    val applyFiltering: Property<Boolean> = objectFactory.property<Boolean>().convention(false)
 
     @Input
-    var timestampFormat: String = "yyyy-MM-dd\\'T\\'HH:mm:ss\\'Z\\'"
+    val timestampFormat: Property<String> = objectFactory.property<String>()
+        .convention("yyyy-MM-dd\\'T\\'HH:mm:ss\\'Z\\'")
 
     @Input
-    var attributes: Array<String> = arrayOf()
+    val attributes: ListProperty<String> = objectFactory.listProperty<String>().convention(emptyList())
 
     @Input
-    var pegdownExtensions: String = "TABLES"
+    val pegdownExtensions: Property<String> = objectFactory.property<String>().convention("TABLES")
 
     @Input
-    var flexmarkParserOptions: String = "LISTS_ORDERED_LIST_MANUAL_START"
+    val flexmarkParserOptions: Property<String> = objectFactory.property<String>()
+        .convention("LISTS_ORDERED_LIST_MANUAL_START")
 
     @TaskAction
     fun callMavenPlugin() {
         val pageGenMojo = MdPageGeneratorMojo()
-        pageGenMojo.log = LoggerAdapter(logger)
-        defaultTitle?.let {
+        pageGenMojo.log = MavenLoggerAdapter(logger)
+        defaultTitle.orNull?.let {
             pageGenMojo.defaultTitle = it
         }
-        pageGenMojo.alwaysUseDefaultTitle = alwaysUseDefaultTitle
-        pageGenMojo.inputDirectory = inputDirectory.path
-        pageGenMojo.outputDirectory = outputDirectory.path
-        headerHtmlFile?.let {
-            pageGenMojo.headerHtmlFile = it.path
+        pageGenMojo.alwaysUseDefaultTitle = alwaysUseDefaultTitle.get()
+        pageGenMojo.inputDirectory = inputDirectory.asFile.get().path
+        pageGenMojo.outputDirectory = outputDirectory.asFile.get().path
+        headerHtmlFile.orNull?.let {
+            pageGenMojo.headerHtmlFile = it.asFile.path
         }
-        footerHtmlFile?.let {
-            pageGenMojo.footerHtmlFile = it.path
+        footerHtmlFile.orNull?.let {
+            pageGenMojo.footerHtmlFile = it.asFile.path
         }
-        pageGenMojo.failIfFilesAreMissing = failIfFilesAreMissing
-        pageGenMojo.recursiveInput = recursiveInput
-        pageGenMojo.transformRelativeMarkdownLinks = transformRelativeMarkdownLinks
-        pageGenMojo.inputEncoding = inputEncoding
-        pageGenMojo.outputEncoding = outputEncoding
-        parsingTimeoutInMillis?.let {
+        pageGenMojo.failIfFilesAreMissing = failIfFilesAreMissing.get()
+        pageGenMojo.recursiveInput = recursiveInput.get()
+        pageGenMojo.transformRelativeMarkdownLinks = transformRelativeMarkdownLinks.get()
+        pageGenMojo.inputEncoding = inputEncoding.get()
+        pageGenMojo.outputEncoding = outputEncoding.get()
+        parsingTimeoutInMillis.orNull?.let {
             pageGenMojo.parsingTimeoutInMillis = it
         }
-        pageGenMojo.setInputFileExtensions(inputFileExtensions)
-        pageGenMojo.applyFiltering = applyFiltering
-        pageGenMojo.outputFileExtension = outputFileExtension
-        pageGenMojo.timestampFormat = timestampFormat
-        pageGenMojo.attributes = attributes
-        pageGenMojo.pegdownExtensions = pegdownExtensions
-        pageGenMojo.flexmarkParserOptions = flexmarkParserOptions
+        pageGenMojo.setInputFileExtensions(inputFileExtensions.get())
+        pageGenMojo.applyFiltering = applyFiltering.get()
+        pageGenMojo.outputFileExtension = outputFileExtension.get()
+        pageGenMojo.timestampFormat = timestampFormat.get()
+        pageGenMojo.attributes = attributes.get().toTypedArray()
+        pageGenMojo.pegdownExtensions = pegdownExtensions.get()
+        pageGenMojo.flexmarkParserOptions = flexmarkParserOptions.get()
+
+        pageGenMojo.filteredOutputDirectory = filteredOutputDirectory.asFile.get()
+        pageGenMojo.project = buildMavenProject()
+        pageGenMojo.mavenResourcesFiltering = buildMavenResourcesFiltering()
 
         pageGenMojo.execute()
     }

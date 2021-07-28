@@ -6,7 +6,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "com.github.monosoul"
-version = "2.3.1.0"
+version = "2.3.1.1"
 
 plugins {
     `kotlin-dsl`
@@ -24,6 +24,7 @@ repositories {
 
 dependencies {
     implementation("com.ruleoftech:markdown-page-generator-plugin:2.3.1")
+    implementation("org.apache.maven:maven-model-builder:3.6.3")
     testImplementation("org.spockframework:spock-core:2.0-groovy-3.0") {
         exclude("org.codehaus.groovy")
     }
@@ -43,9 +44,17 @@ pluginBundle {
     (plugins) {
         "mdPageGeneratorPlugin" {
             displayName = "Markdown to HTML Page Generator Gradle Plugin"
-            description =
-                "This plugins wraps the maven markdown-page-generator-plugin by walokra so it can be used in Gradle."
-            tags = listOf("markdown", "html", "header", "footer", "walokra")
+            description = "This plugins wraps the maven markdown-page-generator-plugin by " +
+                    "Marko Wallin (walokra) so it can be used in Gradle."
+            tags = listOf(
+                "markdown",
+                "html",
+                "header",
+                "footer",
+                "walokra",
+                "com.ruleoftech",
+                "markdown-page-generator-plugin"
+            )
             version = project.version as String
 
             website = "https://github.com/monosoul/markdown-page-generator-gradle-plugin"
