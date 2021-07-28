@@ -1,7 +1,10 @@
 package com.ruleoftech.markdown.page.generator.plugin
 
-import java.lang.reflect.Field
-import kotlin.reflect.KProperty
+import com.github.monosoul.markdown.page.generator.gradle.plugin.support.ReflectionAccessor
+import com.github.monosoul.markdown.page.generator.gradle.plugin.support.ReflectionAccessor.reflectiveSet
+import org.apache.maven.project.MavenProject
+import org.apache.maven.shared.filtering.MavenResourcesFiltering
+import java.io.File
 
 var MdPageGeneratorMojo.defaultTitle: String by ReflectionAccessor
 var MdPageGeneratorMojo.alwaysUseDefaultTitle: Boolean by ReflectionAccessor
@@ -22,22 +25,6 @@ var MdPageGeneratorMojo.timestampFormat: String by ReflectionAccessor
 var MdPageGeneratorMojo.attributes: Array<String> by ReflectionAccessor
 var MdPageGeneratorMojo.pegdownExtensions: String by ReflectionAccessor
 var MdPageGeneratorMojo.flexmarkParserOptions: String by ReflectionAccessor
-
-private object ReflectionAccessor {
-    operator fun <T> getValue(obj: MdPageGeneratorMojo, property: KProperty<*>): T = obj.reflectiveGet(property.name)
-
-    operator fun <T> setValue(obj: MdPageGeneratorMojo, property: KProperty<*>, value: T) =
-        obj.reflectiveSet(property.name, value)
-}
-
-@Suppress("UNCHECKED_CAST")
-private fun <T> MdPageGeneratorMojo.reflectiveGet(fieldName: String): T = getAccessibleField(fieldName).get(this) as T
-private fun <T> MdPageGeneratorMojo.reflectiveSet(fieldName: String, value: T): Unit = getAccessibleField(fieldName)
-    .set(this, value)
-
-private fun MdPageGeneratorMojo.getAccessibleField(fieldName: String): Field = javaClass.getDeclaredField(fieldName)
-    .apply {
-        if (!isAccessible) {
-            isAccessible = true
-        }
-    }
+var MdPageGeneratorMojo.project: MavenProject by ReflectionAccessor
+var MdPageGeneratorMojo.mavenResourcesFiltering: MavenResourcesFiltering by ReflectionAccessor
+var MdPageGeneratorMojo.filteredOutputDirectory: File by ReflectionAccessor

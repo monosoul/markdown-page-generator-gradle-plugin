@@ -1,19 +1,25 @@
 package com.github.monosoul.markdown.page.generator.gradle.plugin
 
+import com.github.monosoul.markdown.page.generator.gradle.plugin.support.MavenLoggerAdapter
+import com.github.monosoul.markdown.page.generator.gradle.plugin.support.buildMavenProject
+import com.github.monosoul.markdown.page.generator.gradle.plugin.support.buildMavenResourcesFiltering
 import com.ruleoftech.markdown.page.generator.plugin.MdPageGeneratorMojo
 import com.ruleoftech.markdown.page.generator.plugin.alwaysUseDefaultTitle
 import com.ruleoftech.markdown.page.generator.plugin.applyFiltering
 import com.ruleoftech.markdown.page.generator.plugin.attributes
 import com.ruleoftech.markdown.page.generator.plugin.defaultTitle
 import com.ruleoftech.markdown.page.generator.plugin.failIfFilesAreMissing
+import com.ruleoftech.markdown.page.generator.plugin.filteredOutputDirectory
 import com.ruleoftech.markdown.page.generator.plugin.flexmarkParserOptions
 import com.ruleoftech.markdown.page.generator.plugin.footerHtmlFile
 import com.ruleoftech.markdown.page.generator.plugin.headerHtmlFile
 import com.ruleoftech.markdown.page.generator.plugin.inputEncoding
+import com.ruleoftech.markdown.page.generator.plugin.mavenResourcesFiltering
 import com.ruleoftech.markdown.page.generator.plugin.outputEncoding
 import com.ruleoftech.markdown.page.generator.plugin.outputFileExtension
 import com.ruleoftech.markdown.page.generator.plugin.parsingTimeoutInMillis
 import com.ruleoftech.markdown.page.generator.plugin.pegdownExtensions
+import com.ruleoftech.markdown.page.generator.plugin.project
 import com.ruleoftech.markdown.page.generator.plugin.recursiveInput
 import com.ruleoftech.markdown.page.generator.plugin.setInputFileExtensions
 import com.ruleoftech.markdown.page.generator.plugin.timestampFormat
@@ -62,6 +68,11 @@ open class GenerateHtmlTask @Inject constructor(
     @OutputDirectory
     val outputDirectory: DirectoryProperty = objectFactory.directoryProperty().convention(
         project.layout.buildDirectory.dir("/html/")
+    )
+
+    @OutputDirectory
+    val filteredOutputDirectory: DirectoryProperty = objectFactory.directoryProperty().convention(
+        project.layout.buildDirectory.dir("/filtered-md/")
     )
 
     @InputFile
@@ -117,7 +128,7 @@ open class GenerateHtmlTask @Inject constructor(
     @TaskAction
     fun callMavenPlugin() {
         val pageGenMojo = MdPageGeneratorMojo()
-        pageGenMojo.log = LoggerAdapter(logger)
+        pageGenMojo.log = MavenLoggerAdapter(logger)
         defaultTitle.orNull?.let {
             pageGenMojo.defaultTitle = it
         }
@@ -145,6 +156,10 @@ open class GenerateHtmlTask @Inject constructor(
         pageGenMojo.attributes = attributes.get().toTypedArray()
         pageGenMojo.pegdownExtensions = pegdownExtensions.get()
         pageGenMojo.flexmarkParserOptions = flexmarkParserOptions.get()
+
+        pageGenMojo.filteredOutputDirectory = filteredOutputDirectory.asFile.get()
+        pageGenMojo.project = buildMavenProject()
+        pageGenMojo.mavenResourcesFiltering = buildMavenResourcesFiltering()
 
         pageGenMojo.execute()
     }

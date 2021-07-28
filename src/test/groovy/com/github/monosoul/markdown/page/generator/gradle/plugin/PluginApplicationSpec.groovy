@@ -38,6 +38,10 @@ class PluginApplicationSpec extends Specification {
             
             tasks {
                 "generateHtml"(GenerateHtmlTask::class) {
+                    headerHtmlFile.set(inputDirectory.file("html/header.html"))
+                    footerHtmlFile.set(inputDirectory.file("html/footer.html"))
+                    applyFiltering.set(true)
+                
                     pegdownExtensions.set(\"\"\"
                         TABLES,
                         FENCED_CODE_BLOCKS,
@@ -80,6 +84,10 @@ class PluginApplicationSpec extends Specification {
             }
 
 			def task = tasks.getByName('generateHtml')
+			
+			task.headerHtmlFile.set(task.inputDirectory.file('html/header.html'))
+            task.footerHtmlFile.set(task.inputDirectory.file('html/footer.html'))
+            task.applyFiltering.set(true)
 			task.pegdownExtensions.set(\"\"\"\
                     TABLES,
                     FENCED_CODE_BLOCKS,

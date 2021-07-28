@@ -1,9 +1,9 @@
-package com.github.monosoul.markdown.page.generator.gradle.plugin
+package com.github.monosoul.markdown.page.generator.gradle.plugin.support
 
 import org.apache.maven.plugin.logging.Log
 import org.gradle.api.logging.Logger
 
-class LoggerAdapter(
+class MavenLoggerAdapter(
     private val logger: Logger
 ) : Log {
     override fun isDebugEnabled() = logger.isDebugEnabled
