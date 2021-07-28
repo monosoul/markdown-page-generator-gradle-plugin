@@ -33,7 +33,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath("gradle.plugin.com.github.monosoul:markdown-page-generator-gradle-plugin:2.3.1.0")
+    classpath("gradle.plugin.com.github.monosoul:markdown-page-generator-gradle-plugin:2.3.1.1")
   }
 }
 
