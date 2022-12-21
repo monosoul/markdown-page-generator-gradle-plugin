@@ -25,6 +25,7 @@ var MdPageGeneratorMojo.timestampFormat: String by ReflectionAccessor
 var MdPageGeneratorMojo.attributes: Array<String> by ReflectionAccessor
 var MdPageGeneratorMojo.pegdownExtensions: String by ReflectionAccessor
 var MdPageGeneratorMojo.flexmarkParserOptions: String by ReflectionAccessor
+var MdPageGeneratorMojo.flexmarkRendererOptions: String by ReflectionAccessor
 var MdPageGeneratorMojo.project: MavenProject by ReflectionAccessor
 var MdPageGeneratorMojo.mavenResourcesFiltering: MavenResourcesFiltering by ReflectionAccessor
 var MdPageGeneratorMojo.filteredOutputDirectory: File by ReflectionAccessor
