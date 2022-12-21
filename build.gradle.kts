@@ -26,7 +26,7 @@ repositories {
 
 dependencies {
     implementation("com.ruleoftech:markdown-page-generator-plugin:2.3.1")
-    implementation("org.apache.maven:maven-model-builder:3.6.3")
+    implementation("org.apache.maven:maven-model-builder:3.8.6")
     testImplementation("org.spockframework:spock-core:2.0-groovy-3.0") {
         exclude("org.codehaus.groovy")
     }
