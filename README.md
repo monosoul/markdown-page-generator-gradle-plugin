@@ -10,12 +10,11 @@ This Gradle plugin's goal is to provide a way of using [the maven markdown-page-
 
 ## Gradle compatibility table
 | Plugin version | Gradle version |
-|:----------------:|:--------------:|
-| 2.3.1.1 | \>= 6.8.3 |
-| 2.3.1.0 | \>= 6.8.3 |
-| 2.3.0.0 | \>= 4.9 |
-| 2.1.0.1 | \>= 4.9 |
-| 2.1.0 | \>= 5.0 |
+|:--------------:|:--------------:|
+|  \>= 2.3.1.0   | \>= 6.8.3 |
+|    2.3.0.0     | \>= 4.9 |
+|    2.1.0.1     | \>= 4.9 |
+|     2.1.0      | \>= 5.0 |
 
 ## Getting Started
 To apply the plugin simply add it to the plugins block of your build script:
