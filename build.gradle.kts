@@ -32,29 +32,61 @@ dependencies {
     testImplementation(gradleTestKit())
 }
 
+val siteUrl = "https://github.com/monosoul/markdown-page-generator-gradle-plugin"
+val githubUrl = "https://github.com/monosoul/markdown-page-generator-gradle-plugin"
+
+val pluginName = "Markdown to HTML Page Generator Gradle Plugin"
+val pluginDescription = "This plugins wraps the maven markdown-page-generator-plugin by " +
+        "Marko Wallin (walokra) so it can be used in Gradle."
+
 gradlePlugin {
-    website.set("https://github.com/monosoul/markdown-page-generator-gradle-plugin")
-    vcsUrl.set("https://github.com/monosoul/markdown-page-generator-gradle-plugin")
+    website.set(siteUrl)
+    vcsUrl.set(githubUrl)
 
     plugins.create("mdPageGeneratorPlugin") {
         id = "com.github.monosoul.markdown.page.generator"
         implementationClass = "com.github.monosoul.markdown.page.generator.gradle.plugin.MdPageGeneratorPlugin"
         version = project.version
 
-        displayName = "Markdown to HTML Page Generator Gradle Plugin"
-        description = "This plugins wraps the maven markdown-page-generator-plugin by " +
-                "Marko Wallin (walokra) so it can be used in Gradle."
+        displayName = pluginName
+        description = pluginDescription
         tags.set(
             listOf(
-                "markdown",
-                "html",
-                "header",
-                "footer",
-                "walokra",
-                "com.ruleoftech",
-                "markdown-page-generator-plugin"
+                "markdown", "html", "header", "footer", "walokra", "com.ruleoftech", "markdown-page-generator-plugin"
             )
         )
+    }
+}
+
+publishing {
+    publications {
+        withType<MavenPublication> {
+            pom {
+                name.set(pluginName)
+                description.set(pluginDescription)
+                url.set(siteUrl)
+                scm {
+                    url.set(githubUrl)
+                    connection.set("scm:git:$githubUrl.git")
+                    developerConnection.set("scm:git:$githubUrl.git")
+                }
+                developers {
+                    developer {
+                        id.set("monosoul")
+                        name.set("Andrei Nevedomskii")
+                    }
+                }
+                licenses {
+                    license {
+                        name.set("The Apache License, Version 2.0")
+                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                    }
+                }
+                issueManagement {
+                    url.set("$githubUrl/issues")
+                }
+            }
+        }
     }
 }
 
