@@ -10,12 +10,14 @@ version = "2.3.1.1"
 
 plugins {
     `kotlin-dsl`
-    id("com.gradle.plugin-publish") version "0.15.0"
+    id("com.gradle.plugin-publish") version "1.1.0"
     groovy
 }
 
+val targetJava = VERSION_1_8
 java {
-    sourceCompatibility = VERSION_1_8
+    sourceCompatibility = targetJava
+    targetCompatibility = targetJava
 }
 
 repositories {
@@ -32,21 +34,19 @@ dependencies {
 }
 
 gradlePlugin {
-    plugins {
-        create("mdPageGeneratorPlugin") {
-            id = "com.github.monosoul.markdown.page.generator"
-            implementationClass = "com.github.monosoul.markdown.page.generator.gradle.plugin.MdPageGeneratorPlugin"
-        }
-    }
-}
+    website.set("https://github.com/monosoul/markdown-page-generator-gradle-plugin")
+    vcsUrl.set("https://github.com/monosoul/markdown-page-generator-gradle-plugin")
 
-pluginBundle {
-    (plugins) {
-        "mdPageGeneratorPlugin" {
-            displayName = "Markdown to HTML Page Generator Gradle Plugin"
-            description = "This plugins wraps the maven markdown-page-generator-plugin by " +
-                    "Marko Wallin (walokra) so it can be used in Gradle."
-            tags = listOf(
+    plugins.create("mdPageGeneratorPlugin") {
+        id = "com.github.monosoul.markdown.page.generator"
+        implementationClass = "com.github.monosoul.markdown.page.generator.gradle.plugin.MdPageGeneratorPlugin"
+        version = project.version
+
+        displayName = "Markdown to HTML Page Generator Gradle Plugin"
+        description = "This plugins wraps the maven markdown-page-generator-plugin by " +
+                "Marko Wallin (walokra) so it can be used in Gradle."
+        tags.set(
+            listOf(
                 "markdown",
                 "html",
                 "header",
@@ -55,15 +55,7 @@ pluginBundle {
                 "com.ruleoftech",
                 "markdown-page-generator-plugin"
             )
-            version = project.version as String
-
-            website = "https://github.com/monosoul/markdown-page-generator-gradle-plugin"
-            vcsUrl = "https://github.com/monosoul/markdown-page-generator-gradle-plugin"
-        }
-    }
-
-    mavenCoordinates {
-        artifactId = project.name
+        )
     }
 }
 
@@ -77,9 +69,9 @@ tasks {
         }
     }
 
-    withType<KotlinCompile>().configureEach {
+    withType<KotlinCompile> {
         kotlinOptions {
-            jvmTarget = VERSION_1_8.majorVersion
+            jvmTarget = "$targetJava"
         }
     }
 }
