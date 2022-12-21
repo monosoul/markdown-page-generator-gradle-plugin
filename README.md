@@ -2,7 +2,8 @@
 This Gradle plugin's goal is to provide a way of using [the maven markdown-page-generator-plugin by Marko Wallin (walokra)](https://github.com/walokra/markdown-page-generator-plugin).
 
 ![Build Status](https://github.com/monosoul/markdown-page-generator-gradle-plugin/actions/workflows/build.yaml/badge.svg?branch=master)
-![GitHub release](https://img.shields.io/github/release/monosoul/markdown-page-generator-gradle-plugin.svg)
+[![GitHub Release](https://img.shields.io/github/release/monosoul/markdown-page-generator-gradle-plugin.svg?label=GitHub%20Release)](https://github.com/monosoul/markdown-page-generator-gradle-plugin/releases)
+[![Gradle Plugins Release](https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/com/github/monosoul/markdown/page/generator/com.github.monosoul.markdown.page.generator.gradle.plugin/maven-metadata.xml.svg?label=Gradle%20Plugin%20Portal)](https://plugins.gradle.org/plugin/com.github.monosoul.markdown.page.generator)
 ![license](https://img.shields.io/github/license/monosoul/markdown-page-generator-gradle-plugin.svg)
  
 [Gradle Plugin Portal page](https://plugins.gradle.org/plugin/com.github.monosoul.markdown.page.generator)
