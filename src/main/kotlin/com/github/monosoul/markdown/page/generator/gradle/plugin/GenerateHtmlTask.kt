@@ -11,6 +11,7 @@ import com.ruleoftech.markdown.page.generator.plugin.defaultTitle
 import com.ruleoftech.markdown.page.generator.plugin.failIfFilesAreMissing
 import com.ruleoftech.markdown.page.generator.plugin.filteredOutputDirectory
 import com.ruleoftech.markdown.page.generator.plugin.flexmarkParserOptions
+import com.ruleoftech.markdown.page.generator.plugin.flexmarkRendererOptions
 import com.ruleoftech.markdown.page.generator.plugin.footerHtmlFile
 import com.ruleoftech.markdown.page.generator.plugin.headerHtmlFile
 import com.ruleoftech.markdown.page.generator.plugin.inputEncoding
@@ -125,6 +126,10 @@ open class GenerateHtmlTask @Inject constructor(
     val flexmarkParserOptions: Property<String> = objectFactory.property<String>()
         .convention("LISTS_ORDERED_LIST_MANUAL_START")
 
+    @Input
+    @Optional
+    val flexmarkRendererOptions: Property<String> = objectFactory.property()
+
     @TaskAction
     fun callMavenPlugin() {
         val pageGenMojo = MdPageGeneratorMojo()
@@ -156,6 +161,9 @@ open class GenerateHtmlTask @Inject constructor(
         pageGenMojo.attributes = attributes.get().toTypedArray()
         pageGenMojo.pegdownExtensions = pegdownExtensions.get()
         pageGenMojo.flexmarkParserOptions = flexmarkParserOptions.get()
+        flexmarkRendererOptions.orNull?.let {
+            pageGenMojo.flexmarkRendererOptions = it
+        }
 
         pageGenMojo.filteredOutputDirectory = filteredOutputDirectory.asFile.get()
         pageGenMojo.project = buildMavenProject()
