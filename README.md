@@ -20,7 +20,7 @@ This Gradle plugin's goal is to provide a way of using [the maven markdown-page-
 To apply the plugin simply add it to the plugins block of your build script:
 ```kotlin
 plugins {
-  id("com.github.monosoul.markdown.page.generator") version "2.3.1.1"
+  id("com.github.monosoul.markdown.page.generator") version "2.4.0.0"
 }
 ```
 
@@ -33,7 +33,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath("gradle.plugin.com.github.monosoul:markdown-page-generator-gradle-plugin:2.3.1.1")
+    classpath("gradle.plugin.com.github.monosoul:markdown-page-generator-gradle-plugin:2.4.0.0")
   }
 }
 
@@ -47,7 +47,7 @@ Just Gradle, nothing else is needed.
 Using Kotlin DSL:
 ```kotlin
 plugins {
-  id("com.github.monosoul.markdown.page.generator") version "2.3.1.1"
+  id("com.github.monosoul.markdown.page.generator") version "2.4.0.0"
 }
 
 tasks {
