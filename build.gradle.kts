@@ -5,7 +5,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-group = "com.github.monosoul"
+group = "gradle.plugin.com.github.monosoul"
 
 plugins {
     `kotlin-dsl`
